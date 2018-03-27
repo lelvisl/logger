@@ -9,16 +9,16 @@ import (
 
 //LogConfig is a configuration for logger
 type LogConfig struct {
-	Title       string `yaml:"title" json:"title"`
-	Type        string `yaml:"type" json:"type"`
-	NetworkType string `yaml:"network type" json:"network type"`
-	Host        string `yaml:"host" json:"host"`
-	Severity    string `yaml:"severity" json:"severity"`
-	Facility    string `yaml:"facility" json:"facility"`
-	Port        string `yaml:"port" json:"port"`
-	FilePath    string `yaml:"file path" json:"file path"`
-	FileName    string `yaml:"file name" json:"file name"`
-	DebugMode   bool   `yaml:"debug mode" json:"debug mode"`
+	Title       string `yaml:"title" json:"title" toml:"title"`
+	Type        string `yaml:"type" json:"type" toml:"type"`
+	NetworkType string `yaml:"network type" json:"network type" toml:"network_type"`
+	Host        string `yaml:"host" json:"host" toml:"host"`
+	Severity    string `yaml:"severity" json:"severity" toml:"severity"`
+	Facility    string `yaml:"facility" json:"facility" toml:"facility"`
+	Port        string `yaml:"port" json:"port" toml:"port"`
+	FilePath    string `yaml:"file path" json:"file path" toml:"file_path"`
+	FileName    string `yaml:"file name" json:"file name" toml:"file_name"`
+	DebugMode   bool   `yaml:"debug mode" json:"debug mode" toml:"debug_mode"`
 }
 
 type ctxlog struct{}
