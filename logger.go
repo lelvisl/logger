@@ -39,7 +39,8 @@ func Logger(ctx context.Context) *log.Logger {
 	return l
 }
 
-func cleateLogger(config LogConfig) *log.Logger {
+//CreateLogger from config
+func CreateLogger(config LogConfig) *log.Logger {
 	logger := initLogger(config)
 	return logger
 }
