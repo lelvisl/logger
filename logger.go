@@ -28,6 +28,11 @@ func WithLogger(ctx context.Context, logger *log.Logger) context.Context {
 	return context.WithValue(ctx, ctxlog{}, logger)
 }
 
+//WithEntry put logger.Entry to context
+func WithEntry(ctx context.Context, logger *log.Entry) context.Context {
+	return context.WithValue(ctx, ctxlog{}, logger)
+}
+
 //Logger get logger from context
 func Logger(ctx context.Context) *log.Logger {
 	//	l, _ := ctx.Value("logger").(*log.Logger)
@@ -35,6 +40,17 @@ func Logger(ctx context.Context) *log.Logger {
 	if !ok {
 		//return DefaultLogger
 		l = initLogger(LogConfig{Type: "stdout", Severity: "LOG_INFO"})
+	}
+	return l
+}
+
+//Entry get logger from context
+func Entry(ctx context.Context) *log.Entry {
+	//	l, _ := ctx.Value("logger").(*log.Entry)
+	l, ok := ctx.Value(ctxlog{}).(*log.Entry)
+	if !ok {
+		//return DefaultLogger
+		l = initLogger(LogConfig{Type: "stdout", Severity: "LOG_INFO"}).WithField("", "")
 	}
 	return l
 }
