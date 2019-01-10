@@ -2,9 +2,9 @@ package logger
 
 import (
 	"context"
-	"os"
-
+	"github.com/onrik/logrus/filename"
 	log "github.com/sirupsen/logrus"
+	"os"
 )
 
 //LogConfig is a configuration for logger
@@ -63,6 +63,9 @@ func CreateLogger(config LogConfig) *log.Logger {
 
 func initLogger(config LogConfig) *log.Logger {
 	logger := log.New()
+	filenameHook := filename.NewHook()
+	filenameHook.Field = "source" // Customize source field name
+	logger.AddHook(filenameHook)
 	switch config.Type {
 	case "syslog":
 		logger = initSyslogger(config)
