@@ -28,6 +28,7 @@ func TestCreateLogger(t *testing.T) {
 
 	for _, tc := range testCases {
 		c := LogConfig{
+			Type:     "stdout",
 			Severity: tc.LogLevel,
 			Sentry: sentryConfig{
 				Tags: map[string]string{

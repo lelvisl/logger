@@ -72,6 +72,12 @@ func initLogger(config LogConfig) *log.Logger {
 	filenameHook := filename.NewHook()
 	filenameHook.Field = "source" // Customize source field name
 	logger.AddHook(filenameHook)
+	if config.Sentry.DSN != "" {
+		sh, err := sentryHook(&config)
+		if err == nil {
+			logger.AddHook(sh)
+		}
+	}
 	switch config.Type {
 	case "syslog":
 		logger = initSyslogger(config)
