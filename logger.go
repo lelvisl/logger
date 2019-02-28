@@ -9,16 +9,22 @@ import (
 
 //LogConfig is a configuration for logger
 type LogConfig struct {
-	Title       string `yaml:"title" json:"title" toml:"title"`
-	Type        string `yaml:"type" json:"type" toml:"type"`
-	NetworkType string `yaml:"network type" json:"network_type" toml:"network_type"`
-	Host        string `yaml:"host" json:"host" toml:"host"`
-	Severity    string `yaml:"severity" json:"severity" toml:"severity"`
-	Facility    string `yaml:"facility" json:"facility" toml:"facility"`
-	Port        string `yaml:"port" json:"port" toml:"port"`
-	FilePath    string `yaml:"file path" json:"file_path" toml:"file_path"`
-	FileName    string `yaml:"file name" json:"file_name" toml:"file_name"`
-	DebugMode   bool   `yaml:"debug mode" json:"debug_mode" toml:"debug_mode"`
+	Title       string       `yaml:"title" json:"title" toml:"title"`
+	Type        string       `yaml:"type" json:"type" toml:"type"`
+	NetworkType string       `yaml:"network type" json:"network_type" toml:"network_type"`
+	Host        string       `yaml:"host" json:"host" toml:"host"`
+	Severity    string       `yaml:"severity" json:"severity" toml:"severity"`
+	Facility    string       `yaml:"facility" json:"facility" toml:"facility"`
+	Port        string       `yaml:"port" json:"port" toml:"port"`
+	FilePath    string       `yaml:"file path" json:"file_path" toml:"file_path"`
+	FileName    string       `yaml:"file name" json:"file_name" toml:"file_name"`
+	DebugMode   bool         `yaml:"debug mode" json:"debug_mode" toml:"debug_mode"`
+	Sentry      sentryConfig `yaml: "sentry" json:"sentry"`
+}
+
+type sentryConfig struct {
+	Tags map[string]string `yaml:"tags" json:"tags"`
+	DSN  string            `yaml:"dsn" json:"dns"`
 }
 
 type ctxlog struct{}
@@ -77,6 +83,8 @@ func initLogger(config LogConfig) *log.Logger {
 	case "stderr":
 		logger.Out = os.Stderr
 		return logger
+	case "sentry":
+		logger = initSentrylogger(config)
 	default:
 	}
 	if config.DebugMode {
