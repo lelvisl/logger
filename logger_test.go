@@ -39,6 +39,7 @@ func TestCreateLogger(t *testing.T) {
 			},
 		}
 		logger := CreateLogger(c)
+
 		logger.Infoln(tc.LogLevel, "Info text")
 		logger.Warningln(tc.LogLevel, " Warn text")
 		logger.Debugln(tc.LogLevel, "Debug text")

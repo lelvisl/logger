@@ -16,34 +16,21 @@ func logLevels(config *LogConfig) []log.Level {
 	return levels
 }
 
-func initSentrylogger(config LogConfig) *log.Logger {
-	var (
-		err error
-	)
-	logger := log.New()
-	_, err = raven.New(config.Sentry.DSN)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	hook, err := sentryHook(&config)
-	if err == nil {
-		logger.Hooks.Add(hook)
-	}
-
-	return logger
-}
-
 func sentryHook(config *LogConfig) (*logrus_sentry.SentryHook, error) {
 	var (
 		hook *logrus_sentry.SentryHook
 		err  error
 	)
+	levels := logLevels(config)
+	client, err := raven.New(config.Sentry.DSN)
+	if err != nil {
+		return nil, err
+	}
 	if len(config.Sentry.Tags) != 0 {
-		hook, err = logrus_sentry.NewWithTagsSentryHook(config.Sentry.DSN, config.Sentry.Tags, logLevels(config))
+		client.Tags = config.Sentry.Tags
 	}
 
-	hook, err = logrus_sentry.NewSentryHook(config.Sentry.DSN, logLevels(config))
+	hook, err = logrus_sentry.NewWithClientSentryHook(client, levels)
 
 	return hook, err
 }
