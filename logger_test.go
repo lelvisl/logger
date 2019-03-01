@@ -38,7 +38,7 @@ func TestCreateLogger(t *testing.T) {
 				DSN: "",
 			},
 		}
-		logger := initSentrylogger(c)
+		logger := CreateLogger(c)
 		logger.Infoln(tc.LogLevel, "Info text")
 		logger.Warningln(tc.LogLevel, " Warn text")
 		logger.Debugln(tc.LogLevel, "Debug text")

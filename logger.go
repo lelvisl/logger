@@ -2,9 +2,10 @@ package logger
 
 import (
 	"context"
+	"os"
+
 	"github.com/onrik/logrus/filename"
 	log "github.com/sirupsen/logrus"
-	"os"
 )
 
 //LogConfig is a configuration for logger
@@ -72,12 +73,6 @@ func initLogger(config LogConfig) *log.Logger {
 	filenameHook := filename.NewHook()
 	filenameHook.Field = "source" // Customize source field name
 	logger.AddHook(filenameHook)
-	if config.Sentry.DSN != "" {
-		sh, err := sentryHook(&config)
-		if err == nil {
-			logger.AddHook(sh)
-		}
-	}
 	switch config.Type {
 	case "syslog":
 		logger = initSyslogger(config)
@@ -92,6 +87,12 @@ func initLogger(config LogConfig) *log.Logger {
 	case "sentry":
 		logger = initSentrylogger(config)
 	default:
+	}
+	if config.Sentry.DSN != "" {
+		sh, err := sentryHook(&config)
+		if err == nil {
+			logger.AddHook(sh)
+		}
 	}
 	if config.DebugMode {
 		logger.Out = os.Stdout
