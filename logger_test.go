@@ -30,7 +30,7 @@ func TestCreateLogger(t *testing.T) {
 		c := LogConfig{
 			Type:     "stdout",
 			Severity: tc.LogLevel,
-			Sentry: sentryConfig{
+			Sentry: SentryConfig{
 				Tags: map[string]string{
 					"site": "dev",
 				},
