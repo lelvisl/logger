@@ -26,6 +26,14 @@ type LogConfig struct {
 type SentryConfig struct {
 	Tags map[string]string `yaml:"tags" json:"tags"`
 	DSN  string            `yaml:"dsn" json:"dns"`
+
+	StacktraceConfigurationEnable bool `yaml:"stacktrace_enable" json:"stacktrace_enable"`
+	// the number of lines to include around a stack frame for context.
+	StacktraceConfigurationContext int `yaml:"stacktrace_context" json:"stacktrace_context"`
+	// whether to create a breadcrumb with the full text of error
+	StacktraceConfigurationBreadcrumb bool `yam:"stacktrace_breadcrumb" json:"stacktrace_breadcrumb"`
+	// the logrus level at which to start capturing stacktraces.
+	StacktraceConfigurationLevel log.Level `yaml:"stacktrace_level" json:"stacktrace_level"`
 }
 
 type ctxlog struct{}
