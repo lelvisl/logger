@@ -31,6 +31,10 @@ func sentryHook(config *LogConfig) (*logrus_sentry.SentryHook, error) {
 	}
 
 	hook, err = logrus_sentry.NewWithClientSentryHook(client, levels)
+	hook.StacktraceConfiguration.Enable = config.Sentry.StacktraceConfigurationEnable
+	hook.StacktraceConfiguration.Level = config.Sentry.StacktraceConfigurationLevel
+	hook.StacktraceConfiguration.Context = config.Sentry.StacktraceConfigurationContext
+	hook.StacktraceConfiguration.IncludeErrorBreadcrumb = config.Sentry.StacktraceConfigurationBreadcrumb
 
 	return hook, err
 }

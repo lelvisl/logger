@@ -21,6 +21,10 @@ func TestCreateLogger(t *testing.T) {
 			"LOG_WARNING",
 		},
 		{
+			"Err text",
+			"LOG_ERR",
+		},
+		{
 			"Debug text",
 			"LOG_DEBUG",
 		},
@@ -42,6 +46,7 @@ func TestCreateLogger(t *testing.T) {
 
 		logger.Infoln(tc.LogLevel, "Info text")
 		logger.Warningln(tc.LogLevel, " Warn text")
+		logger.Errorln(tc.LogLevel, "Err text")
 		logger.Debugln(tc.LogLevel, "Debug text")
 	}
 }
